@@ -1,0 +1,88 @@
+html {
+  text-align: center;
+  vertical-align: center;
+  line-height: 4vh;
+  font-family: 'courier new';
+}
+.justify-center{
+  display: flex;
+  justify-content: center;
+}
+.justify-evenly{
+  display: flex;
+  justify-content: space-evenly;
+}
+#theButton{
+  width: 100px;
+  margin-top: 10px;
+}
+.unselectable{
+  user-select: none;
+}
+#two-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+#altMsg{
+  color: red;
+}
+#moneyAnimation{
+  display: none;
+}
+h1{
+  line-height: 30px;
+}
+p{
+  line-height: 16px;
+  margin-top: 20px;
+  margin-bottom: 5px
+}
+button{
+  background-color: white;
+  color: black;
+  font-family: 'courier new';
+  padding: 10px;
+}
+#shopicon, #closeicon{
+  width: 50px;
+  position: absolute;
+  top: 2%;
+  right: 2%;
+}
+#shop-holder{
+  z-index: 999;
+  display: none;
+  background-color: white;
+  position: absolute;
+  height: 90%;
+  width: 90%;
+  left: 5%;
+  top: 0%;
+  border: 3px solid black;
+  box-shadow: -2px 2px 5px darkgray;
+}
+.store-section{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-content: space-evenly;
+}
+.store-item{
+  width: 15%;
+  box-shadow: -2px 2px 5px darkgray;
+  padding: 5px;
+  margin: 5px;
+}
+
+.store-item p{
+  margin-top: 2px;
+}
+@keyframes success {
+  from{background-color: lime;}
+  to{background-color: white;}
+}
+
+@keyframes failure {
+  from{background-color: #ff6161;}
+  to{background-color: white;}
+}

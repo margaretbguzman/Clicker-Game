@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 93 93">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#_6_dpi_50_);
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #231f20;
+        stroke-miterlimit: 10;
+        stroke-width: 3px;
+      }
+
+      .cls-3 {
+        opacity: .54;
+      }
+
+      .cls-2 {
+        opacity: .31;
+      }
+
+      .cls-2, .cls-4 {
+        fill: #231f20;
+      }
+
+      .cls-5 {
+        fill: none;
+      }
+
+      .cls-6 {
+        fill: #fff;
+        opacity: .65;
+      }
+    </style>
+    <pattern id="_6_dpi_50_" data-name="6 dpi 50%" x="0" y="0" width="48" height="48" patternTransform="translate(-120.28 -221.76)" patternUnits="userSpaceOnUse" viewBox="0 0 48 48">
+      <g>
+        <rect class="cls-5" width="48" height="48"/>
+        <g>
+          <circle class="cls-4" cx="24" cy="48" r="6"/>
+          <circle class="cls-4" cx="48" cy="48" r="6"/>
+          <circle class="cls-4" cx="24" cy="24" r="6"/>
+          <circle class="cls-4" cx="48" cy="24" r="6"/>
+          <circle class="cls-4" cx="36" cy="36" r="6"/>
+          <circle class="cls-4" cx="12" cy="36" r="6"/>
+          <circle class="cls-4" cx="36" cy="12" r="6"/>
+          <circle class="cls-4" cx="12" cy="12" r="6"/>
+        </g>
+        <g>
+          <circle class="cls-4" cy="48" r="6"/>
+          <circle class="cls-4" cy="24" r="6"/>
+        </g>
+        <g>
+          <circle class="cls-4" cx="24" r="6"/>
+          <circle class="cls-4" cx="48" r="6"/>
+        </g>
+        <circle class="cls-4" r="6"/>
+      </g>
+    </pattern>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <circle class="cls-1" cx="46.5" cy="46.5" r="45"/>
+      <g class="cls-3">
+        <circle class="cls-2" cx="46.5" cy="46.5" r="45"/>
+        <circle class="cls-6" cx="46.5" cy="46.5" r="35"/>
+      </g>
+    </g>
+  </g>
+</svg>
