@@ -12,6 +12,15 @@ export default function Clickergame() {
   const moneyAnimation = useRef();
   const upgPerSecBtn = useRef();
   const upgPerClickBtn = useRef();
+  const buyBlueBtn = useRef();
+  const buyGreenBtn = useRef();
+  const buyOrangeBtn = useRef();
+  const buyPinkBtn = useRef();
+  const buyPurpleBtn = useRef();
+  const buyFunnyFaceBtn = useRef();
+  const buyDiscoBtn = useRef();
+  const buyFloralBtn = useRef();
+  const buyPolkaDotsBtn = useRef();
   const [animateValue, setAnimateValue] = useState("");
   const [msg, setMsg] = useState("Get clicking!");
   const [altMsg, setAltMsg] = useState("");
@@ -26,11 +35,81 @@ export default function Clickergame() {
   const [perSecUpgCost, setPerSecUpgCost] = useState(10);
   const [perClickUpgCostDisp, setPerClickUpgCostDisp] = useState(5);
   const [perSecUpgCostDisp, setPerSecUpgCostDisp] = useState(10);
-  const [buttonStyle, setButtonStyle] = useState("")
-  const basicButtonPrice = 1000;
-  const lvl2ButtonPrice = 10000;
-  const lvl3ButtonPrice = 100000;
-  const EliteButtonPrice = 1000000;
+  const shopStock = [redButton, blueButton, orangeButton, pinkButton, purpleButton, funnyFaceButton, discoButton, floralButton, polkaDotsButton];
+  var redButton = {
+    src: "red-button.svg",
+    name: "Red",
+    owned: true,
+    price: 1000,
+  }
+  var blueButton = {
+    src: "blue-button.svg",
+    name: "Blue",
+    owned: {value: false, writable: true},
+    price: 1,
+    buyButton: buyBlueBtn.current,
+  }
+  var greenButton = {
+    src: "green-button.svg",
+    name: "Green",
+    owned: {value: false, writable: true},
+    price: 1000,
+    buyButton: buyGreenBtn.current,
+  }
+  var orangeButton = {
+    src: "orange-button.svg",
+    name: "Orange",
+    owned: {value: false, writable: true},
+    price: 1000,
+    buyButton: buyOrangeBtn.current,
+  }
+  var pinkButton = {
+    src: "pink-button.svg",
+    name: "Pink",
+    owned: {value: false, writable: true},
+    price: 1000,
+    buyButton: buyPinkBtn.current,
+
+  }
+  var purpleButton = {
+    src: "purple-button.svg",
+    name: "Purple",
+    owned: {value: false, writable: true},
+    price: 1000,
+    buyButton: buyPurpleBtn.current,
+  }
+  var funnyFaceButton = {
+    src: "funny-face-button.svg",
+    name: "Funny face",
+    owned: {value: false, writable: true},
+    price: 15000,
+    buyButton: buyFunnyFaceBtn.current,
+  }
+  var discoButton = {
+    src: "disco-button.svg",
+    name: "Disco",
+    owned: {value: false, writable: true},
+    price: 15000,
+    buyButton: buyDiscoBtn.current,
+  }
+  var floralButton = {
+    src: "floral-button.svg",
+    name: "Floral",
+    owned: {value: false, writable: true},
+    price: 15000,
+    buyButton: buyFloralBtn.current,
+  }
+  var polkaDotsButton = {
+    src: "polkadots-button.svg",
+    name: "Polka dots",
+    owned: {value: false, writable: true},
+    price: 15000,
+    buyButton: buyPolkaDotsBtn.current,
+  }
+  const [buyBlueMsg, setBuyBlueMsg] = useState(`Price: $${blueButton.price}`);
+  const [buyGreenMsg, setBuyGreenMsg] = useState(`Price: $${greenButton.price}`);
+  const [buyOrangeMsg, setBuyOrangeMsg] = useState(`Price: $${orangeButton.price}`);
+  const [buttonStyle, setButtonStyle] = useState(redButton.src);
 
 //effects----------------------------------
   useEffect(() => {
@@ -63,7 +142,7 @@ export default function Clickergame() {
     intervals = [];
     //create new interval
     const perSecAllowance = setInterval(function(){
-      console.log(`Received ${dollarsPerSec} dollars`);
+      //console.log(`Received ${dollarsPerSec} dollars`);
       setDollars(dollars+dollarsPerSec);
     }, 1000);
     intervals.push(perSecAllowance);
@@ -209,11 +288,40 @@ export default function Clickergame() {
   function openShop(){
       console.log("opening shop window");
       document.getElementById('shop-holder').style.display = "block";
+      console.log()
   }
 
   function closeShop(){
     console.log("closing shop window");
     document.getElementById('shop-holder').style.display = "none";
+  }
+
+  function buy(itemObj){
+    console.log(`buy button: ${itemObj.buyButton}`);
+    console.log(`item is owned: ${itemObj.owned.value}`);
+    if (itemObj.owned.value == false){
+      console.log(`attempting to buy ${itemObj.name} button`);
+      if (dollars >= itemObj.price){
+        console.log(`bought ${itemObj.name} button`);
+        setDollars(dollars - itemObj.price);
+        itemObj.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {itemObj.buyButton.style.animation = "";}, 1400);
+        itemObj.owned.value = true;
+        setButtonStyle(itemObj.src);
+        switch (itemObj.name){
+          case "Blue":
+            setBuyBlueMsg("Use");
+            break;
+        }
+      } else {
+        console.log("buy failed, cannot afford.");
+        itemObj.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {itemObj.buyButton.style.animation = "";}, 1400);
+      }
+    } else {
+      console.log("item already owned. Applying...");
+      setButtonStyle(itemObj.src);
+    }
   }
   
   //elements--------------------------------------
@@ -226,43 +334,54 @@ export default function Clickergame() {
           <line x1="50" y1="0" x2="0" y2="50" stroke="black" strokeWidth="3px" />
         </svg>
         <h1>Shop</h1>
+        <h2 id="shop-dollar-display">${dollarDisplay}</h2>
         <p>New styles for you!</p>
         <h3>Button Styles</h3>
         <div id="button-styles" className="store-section">
           <div className="store-item">
-            <img src="blue-button.svg"></img>
-            <p>Blue</p>
-            <button>Price: ${basicButtonPrice}</button>
+            <img src={blueButton.src}></img>
+            <p>{blueButton.name}</p>
+            <button ref={buyBlueBtn} onClick={()=>buy(blueButton)}>{buyBlueMsg}</button>
           </div>
           <div className="store-item">
-            <img src="green-button.svg"></img>
-            <p>Green</p>
-            <button>Price: ${basicButtonPrice}</button>
+            <img src={greenButton.src}></img>
+            <p>{greenButton.name}</p>
+            <button onClick={()=>buy(greenButton)} ref={buyGreenBtn}>{buyGreenMsg}</button>
           </div>
           <div className="store-item">
-            <img src="orange-button.svg"></img>
-            <p>Orange</p>
-            <button>Price: ${basicButtonPrice}</button>
+            <img src={orangeButton.src}></img>
+            <p>{orangeButton.name}</p>
+            <button ref={buyOrangeBtn} onClick={()=>buy(orangeButton)}>Price: ${orangeButton.price}</button>
           </div>
           <div className="store-item">
-            <img src="pink-button.svg"></img>
-            <p>Pink</p>
-            <button>Price: ${basicButtonPrice}</button>
+            <img src={pinkButton.src}></img>
+            <p>{pinkButton.name}</p>
+            <button ref={buyPinkBtn} onClick={()=>buy(pinkButton)}>Price: ${pinkButton.price}</button>
           </div>
           <div className="store-item">
-            <img src="purple-button.svg"></img>
-            <p>Purple</p>
-            <button>Price: ${basicButtonPrice}</button>
+            <img src={purpleButton.src}></img>
+            <p>{purpleButton.name}</p>
+            <button ref={buyPurpleBtn} onClick={()=>buy(purpleButton)}>Price: ${purpleButton.price}</button>
           </div>
           <div className="store-item">
-            <img src="funny-face-button.svg"></img>
-            <p>Funny face</p>
-            <button>Price: ${lvl2ButtonPrice}</button>
+            <img src={funnyFaceButton.src}></img>
+            <p>{funnyFaceButton.name}</p>
+            <button ref={buyFunnyFaceBtn} onClick={()=>buy(funnyFaceButton)}>Price: ${funnyFaceButton.price}</button>
           </div>
           <div className="store-item">
-            <img src="disco-button.svg"></img>
-            <p>Disco</p>
-            <button>Price: ${lvl2ButtonPrice}</button>
+            <img src={discoButton.src}></img>
+            <p>{discoButton.name}</p>
+            <button ref={buyDiscoBtn} onClick={()=>buy(discoButton)}>Price: ${discoButton.price}</button>
+          </div>
+          <div className="store-item">
+            <img src={floralButton.src}></img>
+            <p>{floralButton.name}</p>
+            <button ref={buyFloralBtn} onClick={()=>buy(floralButton)}>Price: ${floralButton.price}</button>
+          </div>
+          <div className="store-item">
+            <img src={polkaDotsButton.src}></img>
+            <p>{polkaDotsButton.name}</p>
+            <button ref={buyPolkaDotsBtn} onClick={()=>buy(polkaDotsButton)}>Price: ${polkaDotsButton.price}</button>
           </div>
         </div>
         <h3>Color Schemes</h3>
@@ -274,7 +393,7 @@ export default function Clickergame() {
       
       <h1 className="unselectable">Clicker game</h1>
       <p className="unselectable">Click the button and see what happens...</p>
-      <img src="red-button.svg" id="theButton" onMouseDown={btnClick} ref={button}></img>
+      <img src={buttonStyle} id="theButton" onMouseDown={btnClick} ref={button}></img>
       <img src="/shopping-cart-icon.svg" id="shopicon" onClick={openShop}></img>
       <div id="two-grid">
         <div>
