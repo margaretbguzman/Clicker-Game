@@ -12,6 +12,7 @@ export default function Clickergame() {
   const moneyAnimation = useRef();
   const upgPerSecBtn = useRef();
   const upgPerClickBtn = useRef();
+  const buyRedBtn = useRef();
   const buyBlueBtn = useRef();
   const buyGreenBtn = useRef();
   const buyOrangeBtn = useRef();
@@ -35,38 +36,33 @@ export default function Clickergame() {
   const [perSecUpgCost, setPerSecUpgCost] = useState(10);
   const [perClickUpgCostDisp, setPerClickUpgCostDisp] = useState(5);
   const [perSecUpgCostDisp, setPerSecUpgCostDisp] = useState(10);
-  const shopStock = [redButton, blueButton, orangeButton, pinkButton, purpleButton, funnyFaceButton, discoButton, floralButton, polkaDotsButton];
-  var redButton = {
+  var redButton = { //shopStock[0]
     src: "red-button.svg",
     name: "Red",
-    owned: true,
     price: 1000,
+    buyButton: buyRedBtn.current,
   }
-  var blueButton = {
+  var blueButton = { //shopStock[1]
     src: "blue-button.svg",
     name: "Blue",
-    owned: {value: false, writable: true},
-    price: 1,
+    price: 1000,
     buyButton: buyBlueBtn.current,
   }
-  var greenButton = {
+  var greenButton = { //shopStock[2]
     src: "green-button.svg",
     name: "Green",
-    owned: {value: false, writable: true},
     price: 1000,
     buyButton: buyGreenBtn.current,
   }
-  var orangeButton = {
+  var orangeButton = { //shopStock[3]
     src: "orange-button.svg",
     name: "Orange",
-    owned: {value: false, writable: true},
     price: 1000,
     buyButton: buyOrangeBtn.current,
   }
   var pinkButton = {
     src: "pink-button.svg",
     name: "Pink",
-    owned: {value: false, writable: true},
     price: 1000,
     buyButton: buyPinkBtn.current,
 
@@ -74,41 +70,43 @@ export default function Clickergame() {
   var purpleButton = {
     src: "purple-button.svg",
     name: "Purple",
-    owned: {value: false, writable: true},
     price: 1000,
     buyButton: buyPurpleBtn.current,
   }
   var funnyFaceButton = {
     src: "funny-face-button.svg",
     name: "Funny face",
-    owned: {value: false, writable: true},
     price: 15000,
     buyButton: buyFunnyFaceBtn.current,
   }
   var discoButton = {
     src: "disco-button.svg",
     name: "Disco",
-    owned: {value: false, writable: true},
     price: 15000,
     buyButton: buyDiscoBtn.current,
   }
   var floralButton = {
     src: "floral-button.svg",
     name: "Floral",
-    owned: {value: false, writable: true},
     price: 15000,
     buyButton: buyFloralBtn.current,
   }
   var polkaDotsButton = {
     src: "polkadots-button.svg",
     name: "Polka dots",
-    owned: {value: false, writable: true},
     price: 15000,
     buyButton: buyPolkaDotsBtn.current,
   }
+  const [buyRedMsg, setBuyRedMsg] = useState(`Apply`);
   const [buyBlueMsg, setBuyBlueMsg] = useState(`Price: $${blueButton.price}`);
   const [buyGreenMsg, setBuyGreenMsg] = useState(`Price: $${greenButton.price}`);
   const [buyOrangeMsg, setBuyOrangeMsg] = useState(`Price: $${orangeButton.price}`);
+  const [buyPinkMsg, setBuyPinkMsg] = useState(`Price: $${pinkButton.price}`);
+  const [buyPurpleMsg, setBuyPurpleMsg] = useState(`Price: $${purpleButton.price}`);
+  const [buyFunnyFaceMsg, setBuyFunnyFaceMsg] = useState(`Price: $${funnyFaceButton.price}`);
+  const [buyDiscoMsg, setBuyDiscoMsg] = useState(`Price: $${discoButton.price}`);
+  const [buyFloralMsg, setBuyFloralMsg] = useState(`Price: $${floralButton.price}`);
+  const [buyPolkaDotsMsg, setBuyPolkaDotsMsg] = useState(`Price: $${polkaDotsButton.price}`);
   const [buttonStyle, setButtonStyle] = useState(redButton.src);
 
 //effects----------------------------------
@@ -201,11 +199,10 @@ export default function Clickergame() {
     }
   }, [perSecUpgCost]);
   
-  //functions--------------------------------
+  //-------------------------functions--------------------------------
   function btnClick(){
     setClicks(clicks+1);
     setDollars(dollars+dollarsPerClick);
-    
     button.current.style.filter = "brightness(1.3)";
     button.current.style.transform = "scale(1.2)";
     setTimeout(function(){
@@ -252,6 +249,9 @@ export default function Clickergame() {
       case 600: 
         setMsg("I bet you're a millionaire by now!");
         break;
+      case 650: 
+        setMsg("Check out the shop if you haven't already.");
+        break;
     }
   }
   
@@ -288,7 +288,6 @@ export default function Clickergame() {
   function openShop(){
       console.log("opening shop window");
       document.getElementById('shop-holder').style.display = "block";
-      console.log()
   }
 
   function closeShop(){
@@ -296,35 +295,253 @@ export default function Clickergame() {
     document.getElementById('shop-holder').style.display = "none";
   }
 
-  function buy(itemObj){
-    console.log(`buy button: ${itemObj.buyButton}`);
-    console.log(`item is owned: ${itemObj.owned.value}`);
-    if (itemObj.owned.value == false){
-      console.log(`attempting to buy ${itemObj.name} button`);
-      if (dollars >= itemObj.price){
-        console.log(`bought ${itemObj.name} button`);
-        setDollars(dollars - itemObj.price);
-        itemObj.buyButton.style.animation = "success 1s ease-out";
-        setTimeout(() => {itemObj.buyButton.style.animation = "";}, 1400);
-        itemObj.owned.value = true;
-        setButtonStyle(itemObj.src);
-        switch (itemObj.name){
-          case "Blue":
-            setBuyBlueMsg("Use");
-            break;
-        }
-      } else {
+  function doBuyRed(){
+    console.log("");
+    console.log("------------doBuyRed----------------")
+    console.log("item already owned. Applying...");
+    setButtonStyle(redButton.src);
+    redButton.buyButton.style.animation = "success 1s ease-out";
+    setTimeout(() => {redButton.buyButton.style.animation = "";}, 1400);
+    console.log(`--------------`)
+  }//end of doBuyRed
+
+  function doBuyBlue(){
+    console.log("");
+    console.log("------------doBuyBlue----------------")
+    if (buyBlueMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${blueButton.name} button`);
+      if (dollars >= blueButton.price){//not owned, can afford
+        console.log(`bought ${blueButton.name} button`);
+        setDollars(dollars - blueButton.price);
+        blueButton.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {blueButton.buyButton.style.animation = "";}, 1400);
+        setButtonStyle(blueButton.src);
+        setBuyBlueMsg("Apply");
+      } else { //not owned, can't afford
         console.log("buy failed, cannot afford.");
-        itemObj.buyButton.style.animation = "failure 1s ease-out";
-        setTimeout(() => {itemObj.buyButton.style.animation = "";}, 1400);
+        blueButton.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {blueButton.buyButton.style.animation = "";}, 1400);
       }
-    } else {
+    } else { //owned
       console.log("item already owned. Applying...");
-      setButtonStyle(itemObj.src);
+      setButtonStyle(blueButton.src);
+      blueButton.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {blueButton.buyButton.style.animation = "";}, 1400);
     }
-  }
+    console.log(`--------------`)
+  }//end of doBuyBlue
+
+  function doBuyGreen(){
+    console.log("");
+    console.log("------------doBuyGreen----------------")
+    if (buyGreenMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${greenButton.name} button`);
+      if (dollars >= greenButton.price){//not owned, can afford
+        console.log(`bought ${greenButton.name} button`);
+        setDollars(dollars - greenButton.price);
+        greenButton.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {greenButton.buyButton.style.animation = "";}, 1400);
+        setButtonStyle(greenButton.src);
+        setBuyGreenMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        greenButton.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {greenButton.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      setButtonStyle(greenButton.src);
+      greenButton.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {greenButton.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyGreen
+
+  function doBuyOrange(){
+    console.log("");
+    console.log("------------doBuyOrange----------------")
+    if (buyOrangeMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${orangeButton.name} button`);
+      if (dollars >= orangeButton.price){//not owned, can afford
+        console.log(`bought ${orangeButton.name} button`);
+        setDollars(dollars - orangeButton.price);
+        orangeButton.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {orangeButton.buyButton.style.animation = "";}, 1400);
+        setButtonStyle(orangeButton.src);
+        setBuyOrangeMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        orangeButton.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {orangeButton.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      setButtonStyle(orangeButton.src);
+      orangeButton.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {orangeButton.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyOrange
+
+  function doBuyPink(){
+    console.log("");
+    console.log("------------doBuyPink----------------")
+    if (buyPinkMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${pinkButton.name} button`);
+      if (dollars >= pinkButton.price){//not owned, can afford
+        console.log(`bought ${pinkButton.name} button`);
+        setDollars(dollars - pinkButton.price);
+        pinkButton.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {pinkButton.buyButton.style.animation = "";}, 1400);
+        setButtonStyle(pinkButton.src);
+        setBuyPinkMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        pinkButton.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {pinkButton.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      setButtonStyle(pinkButton.src);
+      pinkButton.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {pinkButton.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyPink
+
+  function doBuyPurple(){
+    console.log("");
+    console.log("------------doBuyPurple----------------")
+    if (buyPurpleMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${purpleButton.name} button`);
+      if (dollars >= purpleButton.price){//not owned, can afford
+        console.log(`bought ${purpleButton.name} button`);
+        setDollars(dollars - purpleButton.price);
+        purpleButton.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {purpleButton.buyButton.style.animation = "";}, 1400);
+        setButtonStyle(purpleButton.src);
+        setBuyPurpleMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        purpleButton.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {purpleButton.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      setButtonStyle(purpleButton.src);
+      purpleButton.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {purpleButton.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyPurple
+
+  function doBuyFunnyFace(){
+    console.log("");
+    console.log("------------doBuyFunnyFace----------------")
+    if (buyFunnyFaceMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${funnyFaceButton.name} button`);
+      if (dollars >= funnyFaceButton.price){//not owned, can afford
+        console.log(`bought ${funnyFaceButton.name} button`);
+        setDollars(dollars - funnyFaceButton.price);
+        funnyFaceButton.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {funnyFaceButton.buyButton.style.animation = "";}, 1400);
+        setButtonStyle(funnyFaceButton.src);
+        setBuyFunnyFaceMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        funnyFaceButton.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {funnyFaceButton.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      setButtonStyle(funnyFaceButton.src);
+      funnyFaceButton.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {funnyFaceButton.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyFunnyFace
+
+  function doBuyDisco(){
+    console.log("");
+    console.log("------------doBuyDisco----------------")
+    if (buyDiscoMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${discoButton.name} button`);
+      if (dollars >= discoButton.price){//not owned, can afford
+        console.log(`bought ${discoButton.name} button`);
+        setDollars(dollars - discoButton.price);
+        discoButton.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {discoButton.buyButton.style.animation = "";}, 1400);
+        setButtonStyle(discoButton.src);
+        setBuyDiscoMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        discoButton.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {discoButton.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      setButtonStyle(discoButton.src);
+      discoButton.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {discoButton.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyDisco
+
+  function doBuyFloral(){
+    console.log("");
+    console.log("------------doBuyFloral----------------")
+    if (buyFloralMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${floralButton.name} button`);
+      if (dollars >= floralButton.price){//not owned, can afford
+        console.log(`bought ${floralButton.name} button`);
+        setDollars(dollars - floralButton.price);
+        floralButton.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {floralButton.buyButton.style.animation = "";}, 1400);
+        setButtonStyle(floralButton.src);
+        setBuyFloralMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        floralButton.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {floralButton.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      setButtonStyle(floralButton.src);
+      floralButton.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {floralButton.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyFloral
+
+  function doBuyPolkaDots(){
+    console.log("");
+    console.log("------------doBuyPolkaDots----------------")
+    if (buyPolkaDotsMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${polkaDotsButton.name} button`);
+      if (dollars >= polkaDotsButton.price){//not owned, can afford
+        console.log(`bought ${polkaDotsButton.name} button`);
+        setDollars(dollars - polkaDotsButton.price);
+        polkaDotsButton.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {polkaDotsButton.buyButton.style.animation = "";}, 1400);
+        setButtonStyle(polkaDotsButton.src);
+        setBuyPolkaDotsMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        polkaDotsButton.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {polkaDotsButton.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      setButtonStyle(polkaDotsButton.src);
+      polkaDotsButton.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {polkaDotsButton.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyPolkaDots
+
+
   
-  //elements--------------------------------------
+  //------------------elements--------------------------------------
   return (
     <main>
       
@@ -338,50 +555,55 @@ export default function Clickergame() {
         <p>New styles for you!</p>
         <h3>Button Styles</h3>
         <div id="button-styles" className="store-section">
+        <div className="store-item">
+            <img src={redButton.src}></img>
+            <p>{redButton.name}</p>
+            <button ref={buyRedBtn} onClick={doBuyRed}>{buyRedMsg}</button>
+          </div>
           <div className="store-item">
             <img src={blueButton.src}></img>
             <p>{blueButton.name}</p>
-            <button ref={buyBlueBtn} onClick={()=>buy(blueButton)}>{buyBlueMsg}</button>
+            <button ref={buyBlueBtn} onClick={doBuyBlue}>{buyBlueMsg}</button>
           </div>
           <div className="store-item">
             <img src={greenButton.src}></img>
             <p>{greenButton.name}</p>
-            <button onClick={()=>buy(greenButton)} ref={buyGreenBtn}>{buyGreenMsg}</button>
+            <button onClick={doBuyGreen} ref={buyGreenBtn}>{buyGreenMsg}</button>
           </div>
           <div className="store-item">
             <img src={orangeButton.src}></img>
             <p>{orangeButton.name}</p>
-            <button ref={buyOrangeBtn} onClick={()=>buy(orangeButton)}>Price: ${orangeButton.price}</button>
+            <button ref={buyOrangeBtn} onClick={doBuyOrange}>{buyOrangeMsg}</button>
           </div>
           <div className="store-item">
             <img src={pinkButton.src}></img>
             <p>{pinkButton.name}</p>
-            <button ref={buyPinkBtn} onClick={()=>buy(pinkButton)}>Price: ${pinkButton.price}</button>
+            <button ref={buyPinkBtn} onClick={doBuyPink}>{buyPinkMsg}</button>
           </div>
           <div className="store-item">
             <img src={purpleButton.src}></img>
             <p>{purpleButton.name}</p>
-            <button ref={buyPurpleBtn} onClick={()=>buy(purpleButton)}>Price: ${purpleButton.price}</button>
+            <button ref={buyPurpleBtn} onClick={doBuyPurple}>{buyPurpleMsg}</button>
           </div>
           <div className="store-item">
             <img src={funnyFaceButton.src}></img>
             <p>{funnyFaceButton.name}</p>
-            <button ref={buyFunnyFaceBtn} onClick={()=>buy(funnyFaceButton)}>Price: ${funnyFaceButton.price}</button>
+            <button ref={buyFunnyFaceBtn} onClick={doBuyFunnyFace}>{buyFunnyFaceMsg}</button>
           </div>
           <div className="store-item">
             <img src={discoButton.src}></img>
             <p>{discoButton.name}</p>
-            <button ref={buyDiscoBtn} onClick={()=>buy(discoButton)}>Price: ${discoButton.price}</button>
+            <button ref={buyDiscoBtn} onClick={doBuyDisco}>{buyDiscoMsg}</button>
           </div>
           <div className="store-item">
             <img src={floralButton.src}></img>
             <p>{floralButton.name}</p>
-            <button ref={buyFloralBtn} onClick={()=>buy(floralButton)}>Price: ${floralButton.price}</button>
+            <button ref={buyFloralBtn} onClick={doBuyFloral}>{buyFloralMsg}</button>
           </div>
           <div className="store-item">
             <img src={polkaDotsButton.src}></img>
             <p>{polkaDotsButton.name}</p>
-            <button ref={buyPolkaDotsBtn} onClick={()=>buy(polkaDotsButton)}>Price: ${polkaDotsButton.price}</button>
+            <button ref={buyPolkaDotsBtn} onClick={doBuyPolkaDots}>{buyPolkaDotsMsg}</button>
           </div>
         </div>
         <h3>Color Schemes</h3>
@@ -411,5 +633,5 @@ export default function Clickergame() {
       </div>
       
     </main>
-  )
+  ) 
 }
