@@ -1,8 +1,11 @@
+
 html {
   text-align: center;
   vertical-align: center;
   line-height: 4vh;
   font-family: 'courier new';
+  background-color: white;
+  color: black;
 }
 .justify-center{
   display: flex;
@@ -19,6 +22,10 @@ html {
 .unselectable{
   user-select: none;
 }
+.money{
+  color: darkgreen;
+  background-color: white;
+}
 #two-grid{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -28,9 +35,6 @@ html {
 }
 #moneyAnimation{
   display: none;
-}
-h1{
-  line-height: 30px;
 }
 p{
   line-height: 16px;
@@ -61,6 +65,9 @@ button{
   border: 3px solid black;
   box-shadow: -2px 2px 5px darkgray;
 }
+#shop-holder h3{
+  margin: 5px;
+}
 .store-section{
   display: flex;
   flex-flow: row wrap;
@@ -68,21 +75,36 @@ button{
   align-content: space-evenly;
 }
 .store-item{
-  width: 15%;
+  width: 10%;
   box-shadow: -2px 2px 5px darkgray;
   padding: 5px;
   margin: 5px;
 }
-
 .store-item p{
-  margin-top: 2px;
+  margin-top: 0px;
 }
+.store-item button{
+  padding: 2px;
+}
+.scheme-color{
+  height: 100%;
+  width: 50%;
+  display: inline-block;
+}
+.scheme-thumbnail{
+  border: 1px solid black;
+  margin: 0px;
+  display: inline-block;
+  width: 90%;
+  height: 30px;
+}
+
 @keyframes success {
   from{background-color: lime;}
-  to{background-color: white;}
+  to{background-color: rgba(1, 1, 1, 0);}
 }
 
 @keyframes failure {
   from{background-color: #ff6161;}
-  to{background-color: white;}
+  to{background-color: rgba(1, 1, 1, 0);}
 }

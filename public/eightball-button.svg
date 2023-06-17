@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 93 93">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-1, .cls-2 {
+        stroke: #231f20;
+        stroke-miterlimit: 10;
+        stroke-width: 3px;
+      }
+
+      .cls-2, .cls-3 {
+        fill: #231f20;
+      }
+
+      .cls-3 {
+        font-family: MyriadPro-Regular, 'Myriad Pro';
+        font-size: 36px;
+      }
+
+      .cls-4 {
+        fill: url(#radial-gradient);
+        opacity: .58;
+      }
+    </style>
+    <radialGradient id="radial-gradient" cx="45.83" cy="-12.96" fx="57.59" fy="1.04" r="27.04" gradientTransform="translate(65.17 104.84) rotate(-90) scale(1.38 1.44)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset=".28" stop-color="#fff" stop-opacity=".66"/>
+      <stop offset=".54" stop-color="#fff" stop-opacity=".38"/>
+      <stop offset=".75" stop-color="#fff" stop-opacity=".17"/>
+      <stop offset=".91" stop-color="#fff" stop-opacity=".05"/>
+      <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <circle class="cls-2" cx="46.5" cy="46.5" r="45"/>
+    <circle class="cls-1" cx="42.75" cy="36.5" r="27.04"/>
+    <text class="cls-3" transform="translate(31.29 44.81)"><tspan x="0" y="0">8</tspan></text>
+    <ellipse class="cls-4" cx="46.5" cy="41.52" rx="38.77" ry="37.35" transform="translate(-15.56 35.68) rotate(-36.39)"/>
+  </g>
+</svg>

@@ -3,21 +3,21 @@
   <defs>
     <style>
       .cls-1 {
-        fill: #a4814d;
-      }
-
-      .cls-2 {
-        fill: #9d702b;
+        fill: #bb7229;
         stroke: #231f20;
         stroke-miterlimit: 10;
         stroke-width: 3px;
+      }
+
+      .cls-2 {
+        fill: #c38934;
       }
     </style>
   </defs>
   <g id="Layer_1-2" data-name="Layer 1">
     <g>
-      <circle class="cls-2" cx="46.5" cy="46.5" r="45"/>
-      <circle class="cls-1" cx="46.5" cy="46.5" r="35"/>
+      <circle class="cls-1" cx="46.5" cy="46.5" r="45"/>
+      <circle class="cls-2" cx="46.5" cy="46.5" r="35"/>
     </g>
   </g>
 </svg>

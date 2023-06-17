@@ -3,15 +3,17 @@ import './App.css';
 import {round} from 'mathjs'
 var intervals = [];
 
-//state variables-------------------------------
 
 export default function Clickergame() {
+//-------------------------refs----------
+
   const button = useRef();
   const msgElement = useRef();
   const altMsgElement = useRef();
   const moneyAnimation = useRef();
   const upgPerSecBtn = useRef();
   const upgPerClickBtn = useRef();
+
   const buyRedBtn = useRef();
   const buyBlueBtn = useRef();
   const buyGreenBtn = useRef();
@@ -22,6 +24,15 @@ export default function Clickergame() {
   const buyDiscoBtn = useRef();
   const buyFloralBtn = useRef();
   const buyPolkaDotsBtn = useRef();
+  const buyEightBallButton = useRef()
+  const buyBasketballButton = useRef();
+  const buyBaseballButton = useRef();
+
+  const buyClassicBtn = useRef();
+  const buyInvertedBtn = useRef();
+
+//state variables-------------------------------
+
   const [animateValue, setAnimateValue] = useState("");
   const [msg, setMsg] = useState("Get clicking!");
   const [altMsg, setAltMsg] = useState("");
@@ -36,25 +47,28 @@ export default function Clickergame() {
   const [perSecUpgCost, setPerSecUpgCost] = useState(10);
   const [perClickUpgCostDisp, setPerClickUpgCostDisp] = useState(5);
   const [perSecUpgCostDisp, setPerSecUpgCostDisp] = useState(10);
-  var redButton = { //shopStock[0]
+
+  //shop objects-------------------------
+
+  var redButton = {
     src: "red-button.svg",
     name: "Red",
-    price: 1000,
+    price: 0,
     buyButton: buyRedBtn.current,
   }
-  var blueButton = { //shopStock[1]
+  var blueButton = {
     src: "blue-button.svg",
     name: "Blue",
     price: 1000,
     buyButton: buyBlueBtn.current,
   }
-  var greenButton = { //shopStock[2]
+  var greenButton = {
     src: "green-button.svg",
     name: "Green",
     price: 1000,
     buyButton: buyGreenBtn.current,
   }
-  var orangeButton = { //shopStock[3]
+  var orangeButton = {
     src: "orange-button.svg",
     name: "Orange",
     price: 1000,
@@ -97,6 +111,48 @@ export default function Clickergame() {
     price: 15000,
     buyButton: buyPolkaDotsBtn.current,
   }
+  var eightBallButton = {
+    src: "eightball-button.svg",
+    name: "Eightball",
+    price: 100000,
+    buyButton: buyEightBallButton.current,
+  }
+  var basketballButton = {
+    src: "basketball-button.svg",
+    name: "Basketball",
+    price: 100000,
+    buyButton: buyBasketballButton.current,
+  }
+  var baseballButton = {
+    src: "baseball-button.svg",
+    name: "Baseball",
+    price: 100000,
+    buyButton: buyBaseballButton.current,
+  }
+
+  var classicScheme = {
+    name: "Classic",
+    bgColor: "white",
+    accentColor: "black",
+    price: 10,
+    buyButton: buyClassicBtn.current,
+    SVGstyle: {
+      fill: "none",
+      stroke: "black",
+    }
+  }
+  var invertedScheme = {
+    name: "Inverted",
+    bgColor: "black",
+    accentColor: "white",
+    price: 10,
+    buyButton: buyInvertedBtn.current,
+    SVGstyle: {
+      fill: "none",
+      stroke: "white",
+    }
+  }
+
   const [buyRedMsg, setBuyRedMsg] = useState(`Apply`);
   const [buyBlueMsg, setBuyBlueMsg] = useState(`Price: $${blueButton.price}`);
   const [buyGreenMsg, setBuyGreenMsg] = useState(`Price: $${greenButton.price}`);
@@ -107,6 +163,11 @@ export default function Clickergame() {
   const [buyDiscoMsg, setBuyDiscoMsg] = useState(`Price: $${discoButton.price}`);
   const [buyFloralMsg, setBuyFloralMsg] = useState(`Price: $${floralButton.price}`);
   const [buyPolkaDotsMsg, setBuyPolkaDotsMsg] = useState(`Price: $${polkaDotsButton.price}`);
+  const [buyEightBallMsg, setBuyEightBallMsg] = useState(`Price: $${eightBallButton.price}`);
+  const [buyBasketballMsg, setBuyBasketballMsg] = useState(`Price: $${basketballButton.price}`);
+  const [buyBaseballMsg, setBuyBaseballMsg] = useState(`Price: $${baseballButton.price}`);
+  const [buyClassicMsg, setBuyClassicMsg] = useState(`Apply`);
+  const [buyInvertedMsg, setBuyInvertedMsg] = useState(`Price: $${invertedScheme.price}`);
   const [buttonStyle, setButtonStyle] = useState(redButton.src);
 
 //effects----------------------------------
@@ -539,7 +600,186 @@ export default function Clickergame() {
     console.log(`--------------`)
   }//end of doBuyPolkaDots
 
+  function doBuyEightBall(){
+    console.log("");
+    console.log("------------doBuyEightBall----------------")
+    if (buyEightBallMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${eightBallButton.name} button`);
+      if (dollars >= eightBallButton.price){//not owned, can afford
+        console.log(`bought ${eightBallButton.name} button`);
+        setDollars(dollars - eightBallButton.price);
+        eightBallButton.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {eightBallButton.buyButton.style.animation = "";}, 1400);
+        setButtonStyle(eightBallButton.src);
+        setBuyEightBallMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        eightBallButton.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {eightBallButton.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      setButtonStyle(eightBallButton.src);
+      eightBallButton.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {eightBallButton.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyEightBall
 
+  function doBuyBasketball(){
+    console.log("");
+    console.log("------------doBuyBasketball----------------")
+    if (buyBasketballMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${basketballButton.name} button`);
+      if (dollars >= basketballButton.price){//not owned, can afford
+        console.log(`bought ${basketballButton.name} button`);
+        setDollars(dollars - basketballButton.price);
+        basketballButton.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {basketballButton.buyButton.style.animation = "";}, 1400);
+        setButtonStyle(basketballButton.src);
+        setBuyBasketballMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        basketballButton.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {basketballButton.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      setButtonStyle(basketballButton.src);
+      basketballButton.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {basketballButton.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyBasketball
+
+  function doBuyBaseball(){
+    console.log("");
+    console.log("------------doBuyBaseball----------------")
+    if (buyBaseballMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${baseballButton.name} button`);
+      if (dollars >= baseballButton.price){//not owned, can afford
+        console.log(`bought ${baseballButton.name} button`);
+        setDollars(dollars - baseballButton.price);
+        baseballButton.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {baseballButton.buyButton.style.animation = "";}, 1400);
+        setButtonStyle(baseballButton.src);
+        setBuyBaseballMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        baseballButton.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {baseballButton.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      setButtonStyle(baseballButton.src);
+      baseballButton.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {baseballButton.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyBaseball
+
+  function doBuyClassic(){
+    console.log("");
+    console.log("------------doBuyClassic----------------")
+    if (buyClassicMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${classicScheme.name} scheme`);
+      if (dollars >= classicScheme.price){//not owned, can afford
+        console.log(`bought ${classicScheme.name} button`);
+        setDollars(dollars - classicScheme.price);
+        classicScheme.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {classicScheme.buyButton.style.animation = "";}, 1400);
+        changeScheme("white", "black", "darkgreen", classicScheme.SVGstyle);
+        setBuyClassicMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        classicScheme.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {classicScheme.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      changeScheme("white", "black", "darkgreen", classicScheme.SVGstyle);
+      classicScheme.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {classicScheme.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyClassic
+
+  function doBuyInverted(){
+    console.log("");
+    console.log("------------doBuyInverted----------------")
+    if (buyInvertedMsg !== "Apply"){ //not owned
+      console.log(`attempting to buy ${invertedScheme.name} scheme`);
+      if (dollars >= invertedScheme.price){//not owned, can afford
+        console.log(`bought ${invertedScheme.name} button`);
+        setDollars(dollars - invertedScheme.price);
+        invertedScheme.buyButton.style.animation = "success 1s ease-out";
+        setTimeout(() => {invertedScheme.buyButton.style.animation = "";}, 1400);
+        changeScheme("black", "white", "lime", invertedScheme.SVGstyle);
+        setBuyInvertedMsg("Apply");
+      } else { //not owned, can't afford
+        console.log("buy failed, cannot afford.");
+        invertedScheme.buyButton.style.animation = "failure 1s ease-out";
+        setTimeout(() => {invertedScheme.buyButton.style.animation = "";}, 1400);
+      }
+    } else { //owned
+      console.log("item already owned. Applying...");
+      changeScheme("black", "white", "lime", invertedScheme.SVGstyle);
+      invertedScheme.buyButton.style.animation = "success 1s ease-out";
+      setTimeout(() => {invertedScheme.buyButton.style.animation = "";}, 1400);
+    }
+    console.log(`--------------`)
+  }//end of doBuyInverted
+
+  function changeScheme(bgcolor, accentcolor, moneycolor, schemeObj){
+    console.log(`changing bgcolor to ${bgcolor} and accentcolor to ${accentcolor}`);
+    var html = document.getElementById('html');
+    var h1Arr = document.getElementsByTagName('h1');
+    var h2Arr = document.getElementsByTagName('h2');
+    var h3Arr = document.getElementsByTagName('h3');
+    var moneyArr = document.getElementsByClassName('money');
+    var buttons = document.getElementsByTagName('button');
+    var shop = document.getElementById('shop-holder');
+    var SVGElemsArr = document.getElementsByTagName('svg');
+    
+    //recolor whole doc
+    html.style.backgroundColor = bgcolor;
+    html.style.color = accentcolor;
+    //recolor shop
+    shop.style.backgroundColor = bgcolor;
+    shop.style.color = accentcolor;
+    //recolor headings
+    for (var i=0; i<h1Arr.length; i++){
+      console.log(`changing style for element:`);
+      console.log(h1Arr[i]);
+      h1Arr[i].style.backgroundColor = bgcolor;
+      h1Arr[i].style.color = accentcolor;
+    }
+    //recolor money display
+    for (var i=0; i<moneyArr.length; i++){
+      console.log(`changing style for element:`);
+      console.log(moneyArr[i]);
+      moneyArr[i].style.backgroundColor = bgcolor;
+      moneyArr[i].style.color = moneycolor;
+    }
+    //recolor home buttons
+    for (var i=0; i<buttons.length; i++){
+      console.log(`changing style for element:`);
+      console.log(buttons[i]);
+      buttons[i].style.backgroundColor = bgcolor;
+      buttons[i].style.color = accentcolor;
+    }
+    //recolor SVG graphics
+    for (var i=0; i<SVGElemsArr.length; i++){
+      console.log(`changing style for element:`);
+      console.log(SVGElemsArr[i]);
+      var SVGShapes = SVGElemsArr[i].children;
+      for (var i=0; i<SVGShapes.length; i++){
+        console.log(`changing properties for shape:`)
+        console.log(SVGShapes[i]);
+        SVGShapes[i].setAttribute("stroke", accentcolor);
+      }
+    }
+  }
   
   //------------------elements--------------------------------------
   return (
@@ -551,8 +791,7 @@ export default function Clickergame() {
           <line x1="50" y1="0" x2="0" y2="50" stroke="black" strokeWidth="3px" />
         </svg>
         <h1>Shop</h1>
-        <h2 id="shop-dollar-display">${dollarDisplay}</h2>
-        <p>New styles for you!</p>
+        <h2 id="shop-dollar-display" className='money'>${dollarDisplay}</h2>
         <h3>Button Styles</h3>
         <div id="button-styles" className="store-section">
         <div className="store-item">
@@ -605,10 +844,40 @@ export default function Clickergame() {
             <p>{polkaDotsButton.name}</p>
             <button ref={buyPolkaDotsBtn} onClick={doBuyPolkaDots}>{buyPolkaDotsMsg}</button>
           </div>
+          <div className="store-item">
+            <img src={eightBallButton.src}></img>
+            <p>{eightBallButton.name}</p>
+            <button ref={buyEightBallButton} onClick={doBuyEightBall}>{buyEightBallMsg}</button>
+          </div>
+          <div className="store-item">
+            <img src={basketballButton.src} width="90%"></img>
+            <p>{basketballButton.name}</p>
+            <button ref={buyBasketballButton} onClick={doBuyBasketball}>{buyBasketballMsg}</button>
+          </div>
+          <div className="store-item">
+            <img src={baseballButton.src}></img>
+            <p>{baseballButton.name}</p>
+            <button ref={buyBaseballButton} onClick={doBuyBaseball}>{buyBaseballMsg}</button>
+          </div>
         </div>
         <h3>Color Schemes</h3>
         <div id="color-schemes" className="store-section">
-          <img src=""></img>
+          <div className='store-item'>
+            <div id="classic-thumbnail" className="scheme-thumbnail">
+              <div id="classic-bgcolor" className="scheme-color"></div>
+              <div id="classic-accentcolor" className="scheme-color"></div>
+            </div>
+            <p>{classicScheme.name}</p>
+            <button ref={buyClassicBtn} onClick={doBuyClassic}>{buyClassicMsg}</button>
+          </div>
+          <div className='store-item'>
+            <div id="inverted-thumbnail" className="scheme-thumbnail">
+              <div id="inverted-bgcolor" className="scheme-color"></div>
+              <div id="inverted-accentcolor" className="scheme-color"></div>
+            </div>
+            <p>{invertedScheme.name}</p>
+            <button ref={buyInvertedBtn} onClick={doBuyInverted}>{buyInvertedMsg}</button>
+          </div>
         </div>
       </div>
 
@@ -616,11 +885,11 @@ export default function Clickergame() {
       <h1 className="unselectable">Clicker game</h1>
       <p className="unselectable">Click the button and see what happens...</p>
       <img src={buttonStyle} id="theButton" onMouseDown={btnClick} ref={button}></img>
-      <img src="/shopping-cart-icon.svg" id="shopicon" onClick={openShop}></img>
+      <svg onClick={openShop} version="1.1" id="shopicon" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.9 107.5" xmlSpace="preserve"><path stroke="black" d="M3.9,7.9C1.8,7.9,0,6.1,0,3.9C0,1.8,1.8,0,3.9,0h10.2c0.1,0,0.3,0,0.4,0c3.6,0.1,6.8,0.8,9.5,2.5c3,1.9,5.2,4.8,6.4,9.1 c0,0.1,0,0.2,0.1,0.3l1,4H119c2.2,0,3.9,1.8,3.9,3.9c0,0.4-0.1,0.8-0.2,1.2l-10.2,41.1c-0.4,1.8-2,3-3.8,3v0H44.7 c1.4,5.2,2.8,8,4.7,9.3c2.3,1.5,6.3,1.6,13,1.5h0.1v0h45.2c2.2,0,3.9,1.8,3.9,3.9c0,2.2-1.8,3.9-3.9,3.9H62.5v0 c-8.3,0.1-13.4-0.1-17.5-2.8c-4.2-2.8-6.4-7.6-8.6-16.3l0,0L23,13.9c0-0.1,0-0.1-0.1-0.2c-0.6-2.2-1.6-3.7-3-4.5 c-1.4-0.9-3.3-1.3-5.5-1.3c-0.1,0-0.2,0-0.3,0H3.9L3.9,7.9z M96,88.3c5.3,0,9.6,4.3,9.6,9.6c0,5.3-4.3,9.6-9.6,9.6 c-5.3,0-9.6-4.3-9.6-9.6C86.4,92.6,90.7,88.3,96,88.3L96,88.3z M53.9,88.3c5.3,0,9.6,4.3,9.6,9.6c0,5.3-4.3,9.6-9.6,9.6 c-5.3,0-9.6-4.3-9.6-9.6C44.3,92.6,48.6,88.3,53.9,88.3L53.9,88.3z M33.7,23.7l8.9,33.5h63.1l8.3-33.5H33.7L33.7,23.7z"/></svg>
       <div id="two-grid">
         <div>
           <h1 className="unselectable" ref={moneyAnimation} id="moneyAnimation">${animateValue}</h1>
-          <h1 className="unselectable">${dollarDisplay}</h1>
+          <h1 className="money">${dollarDisplay}</h1>
           <p ref={msgElement} className="unselectable">{msg}</p>
           <p ref={altMsgElement} className="unselectable" id="altMsg">{altMsg}</p>
         </div>
